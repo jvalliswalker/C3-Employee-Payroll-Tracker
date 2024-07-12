@@ -3,17 +3,56 @@ const addEmployeesBtn = document.querySelector('#add-employees-btn');
 
 // Collect employee data
 const collectEmployees = function() {
-  // TODO: Get user input to create and return an array of employee objects
+  const employees = []; // Array to hold all added employees
+
+  let doneAddingEmployees = false;
+
+  while (doneAddingEmployees == false){
+    const employee = {}; // Individual object to hold employee data
+  
+    // Get employee data via browser prompt
+    employee['firstName'] = prompt('Enter First Name');
+    employee['lastName'] = prompt('Enter Last Name');
+
+    const salaryPrompt = Number(prompt('Enter salary'));
+    employee['salary'] = isNaN(salaryPrompt) ? 0 : salaryPrompt; // Convert text prompt answer to number for later calculation
+
+    // Add new data to array
+    employees.push(employee);
+
+    // Check to see if new data should be presented
+    doneAddingEmployees = !confirm("Do you want to add another employee?");
+  }
+
+  return employees;
 }
 
 // Display the average salary
 const displayAverageSalary = function(employeesArray) {
-  // TODO: Calculate and display the average salary
+
+  let sum = 0;
+  const count = employeesArray.length;
+
+  // Collect sum from each employee salary
+  for(const employee of employeesArray){
+    sum += employee.salary;
+  }
+
+  const averageSalary = (sum / count).toFixed(2); // Use .toFixed(2) to get average rounded to second decimal
+
+  // Log results
+  console.log(`The average employee salary between our ${count} employees is $${averageSalary}`);
 }
+
 
 // Select a random employee
 const getRandomEmployee = function(employeesArray) {
-  // TODO: Select and display a random employee
+  // Get random index among those available in passed array by multiplying Math.random by number in array, then rounding
+  const randomEmployeeIndex = Math.floor(Math.random() * employeesArray.length);
+  // Select employee from array with generated index
+  const chosenEmployee = employeesArray[randomEmployeeIndex]
+  // Display first and last name of selected employee
+  console.log(`Congratulations to ${chosenEmployee.firstName} ${chosenEmployee.lastName}, our random drawing winner!`);
 }
 
 /*
