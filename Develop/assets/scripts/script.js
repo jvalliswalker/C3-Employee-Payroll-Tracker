@@ -4,27 +4,27 @@ const addEmployeesBtn = document.querySelector('#add-employees-btn');
 // Collect employee data
 const collectEmployees = function() {
   const employees = []; // Array to hold all added employees
-  const employee = {}; // Individual object to hold employee data
 
-  // Get employee data via browser prompt
-  employee['firstName'] = prompt('Enter First Name');
-  employee['lastName'] = prompt('Enter Last Name');
-  employee['salary'] = Number(prompt('Enter salary')); // Convert text prompt answer to number for later calculation
+  let doneAddingEmployees = false;
 
-  // Add new data to array
-  employees.push(employee);
+  while (doneAddingEmployees == false){
+    const employee = {}; // Individual object to hold employee data
+  
+    // Get employee data via browser prompt
+    employee['firstName'] = prompt('Enter First Name');
+    employee['lastName'] = prompt('Enter Last Name');
 
-  // Check to see if new data should be presented
-  const addAdditionalEmployee = confirm("Do you want to add another employee?");
+    const salaryPrompt = Number(prompt('Enter salary'));
+    employee['salary'] = isNaN(salaryPrompt) ? 0 : salaryPrompt; // Convert text prompt answer to number for later calculation
 
-  // If additional employee desired, recursively call self and add value to returned array
-  if(addAdditionalEmployee){
-    return employees.concat(collectEmployees());
+    // Add new data to array
+    employees.push(employee);
+
+    // Check to see if new data should be presented
+    doneAddingEmployees = !confirm("Do you want to add another employee?");
   }
-  // Otherwise simply return array of employees
-  else {
-    return employees;
-  }
+
+  return employees;
 }
 
 // Display the average salary
